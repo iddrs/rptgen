@@ -1,6 +1,5 @@
 from enum import Enum
 from os import path, makedirs
-import configparser
 import pandas as pd
 
 class Escopo(Enum):
@@ -10,12 +9,14 @@ class Escopo(Enum):
     MUN = 3
 
 class ETL():
-    def __init__(self, ano, mes, escopo):
+
+    output_file = 'bp.xlsx'
+
+    def __init__(self, config, ano, mes, escopo):
         self.ano = ano
         self.mes = mes
         self.escopo = escopo
-        self.config = configparser.ConfigParser()
-        self.config.read('../config.ini')
+        self.config = config
 
     def run(self):
         self.extract()
@@ -62,7 +63,7 @@ class ETL():
             escopo = 'cm'
         elif self.escopo == Escopo.MUN:
             escopo = 'mun'
-        output = path.join(self.config['rptgen']['output_base_dir'], str(self.ano), str(self.mes).zfill(2), 'DCASP', escopo, 'bp.xlsx')
+        output = path.join(self.config['rptgen']['output_base_dir'], str(self.ano), str(self.mes).zfill(2), 'DCASP', escopo, self.output_file)
 
         if not path.isfile(path.dirname(output)):
             makedirs(path.dirname(output), exist_ok=True)
