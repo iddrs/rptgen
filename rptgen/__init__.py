@@ -18,3 +18,21 @@ def load_config(config_file):
     config = configparser.ConfigParser()
     config.read(config_file)
     return config
+
+class DataRepo:
+    def __init__(self, data):
+        self.data = data
+
+    def get(self, frame, linha, campo):
+        df = self.data[frame]
+        return df[df['Linha'] == linha][campo].sum()
+
+    def get_frame(self, frame):
+        return self.data[frame]
+
+    def get_campo(self, frame, campo):
+        return self.data[frame][campo]
+
+    def get_linha(self, frame, linha):
+        df = self.data[frame]
+        return df[df['Linha'] == linha]

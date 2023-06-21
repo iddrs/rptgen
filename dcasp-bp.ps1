@@ -52,12 +52,16 @@
 $ano = 2022
 $mes = 12
 $escopo = 2
-$acao = 0
+$acao = 1
 # para testes
 
-if ($acao -eq 0) {
+if ($acao -eq 0)
+{
     cd dcasp
     python 'bp-etl.py' --ano $ano --mes $mes --escopo $escopo
+}elseif ($acao -eq 1) {
+    cd dcasp
+    python 'bp-ohtml.py' --ano $ano --mes $mes --escopo $escopo
 } else {
     Write-Error "Ação não reconhecida!"
 }
