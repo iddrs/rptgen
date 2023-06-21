@@ -54,6 +54,21 @@ class ETL():
     def load(self):
         self.load_quadro_principal()
 
+    def load_ano_anterior(self, frame):
+        ano_anterior = self.ano - 1
+        if self.escopo == Escopo.PM:
+            escopo = 'pm'
+        elif self.escopo == Escopo.FPSM:
+            escopo = 'fpsm'
+        elif self.escopo == Escopo.CM:
+            escopo = 'cm'
+        elif self.escopo == Escopo.MUN:
+            escopo = 'mun'
+        input = path.join(self.config['rptgen']['output_base_dir'], str(ano_anterior), str(self.mes).zfill(2), 'DCASP',
+                           escopo, self.output_file)
+        return pd.read_excel(input, sheet_name=frame)
+
+
     def save(self, df, frame):
         if self.escopo == Escopo.PM:
             escopo = 'pm'
@@ -73,6 +88,7 @@ class ETL():
         return round(df[filter][col].sum(), 2)
 
     def load_quadro_principal(self):
+        frame = 'QuadroPrincipal'
         bverenc = self.bverenc
         df = pd.DataFrame(columns=['Linha', 'ExercicioAtual'])
 
@@ -387,4 +403,26 @@ class ETL():
         }])
         df = pd.concat([df, r])
 
-        self.save(df, 'QuadroPrincipal')
+        '''Total do Passivo e PL'''
+        '''Ações e cotas em tesouraria'''
+        r = pd.DataFrame([{
+            'Linha': 'PassivoEPLTotal',
+            'ExercicioAtual': self.sum(bverenc, 'saldo_final',
+                                       bverenc['conta_contabil'].astype(str).str.startswith('2'))
+        }])
+        df = pd.concat([df, r])
+
+        df_ant = self.load_ano_anterior(frame)
+        df = self.merge_atual_anterior(df, df_ant, 'ExercicioAnterior', 'ExercicioAtual')
+
+        self.save(df, frame)
+
+    def merge_atual_anterior(self, atual, anterior, novo_campo, campo_anterior):
+        atual[novo_campo] = 0.0
+        valor = []
+        for i, r in atual.iterrows():
+            linha = r['Linha']
+            if anterior['Linha'].isin([linha]).any():
+                valor.append(anterior[anterior['Linha'] == linha][campo_anterior].sum())
+        atual[novo_campo] = valor
+        return atual
