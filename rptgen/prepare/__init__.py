@@ -1,8 +1,10 @@
-import pandas as pd
 from abc import ABC, abstractmethod
-from rptgen.frame import Frames
-from rptgen.escopo import Escopo
+
+import pandas as pd
 from typeguard import typechecked
+
+from rptgen.escopo import Escopo
+from rptgen.frame import Frames
 
 
 @typechecked

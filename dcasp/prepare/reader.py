@@ -1,7 +1,9 @@
 import os.path
+
 import pandas as pd
-from rptgen.prepare.reader import Reader
 from typeguard import typechecked
+
+from rptgen.prepare.reader import Reader
 
 
 @typechecked
@@ -21,8 +23,10 @@ class PadReader(Reader):
         if ext == '.parquet':
             return self.from_parquet
 
-    def from_excel(self, filepath: str):
+    @staticmethod
+    def from_excel(filepath: str):
         return pd.read_excel(filepath)
 
-    def from_parquet(self, filepath: str):
+    @staticmethod
+    def from_parquet(filepath: str):
         return pd.read_parquet(filepath)

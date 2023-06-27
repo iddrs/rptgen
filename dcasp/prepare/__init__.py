@@ -1,14 +1,16 @@
+import argparse
+import os
+
+import pandas as pd
+from typeguard import typechecked
+
+import cfg
+from dcasp.prepare.bp import Prepare
+from dcasp.prepare.reader import PadReader
 from dcasp.prepare.writer import ExcelWriter
+from rptgen import log
 from rptgen.escopo import Escopo
 from rptgen.frame import Frames
-import pandas as pd
-import os
-from rptgen import log
-from dcasp.prepare.reader import PadReader
-import cfg
-import argparse
-from dcasp.prepare.bp import Prepare
-from typeguard import typechecked
 
 logger = log.get_logger(__name__)
 
@@ -16,7 +18,7 @@ logger = log.get_logger(__name__)
 @typechecked
 def extract(args: argparse.Namespace) -> dict:
     logger.info('Carregando os dados brutos...')
-    source_dir = os.path.join(cfg.pad.BASE_DIR, f'{str(args.ano)}-{str(args.mes).zfill(2)}', 'parquet')
+    source_dir = os.path.join(cfg.Pad.BASE_DIR, f'{str(args.ano)}-{str(args.mes).zfill(2)}', 'parquet')
     logger.debug(f'Dados de origem: {source_dir}')
     reader = PadReader(base_dir=source_dir)
     bverenc = reader.read('BVER_ENC.parquet')

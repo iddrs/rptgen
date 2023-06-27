@@ -1,5 +1,7 @@
 from enum import Enum
+
 from typeguard import typechecked
+
 
 @typechecked
 class Escopo(Enum):

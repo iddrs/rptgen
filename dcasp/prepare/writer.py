@@ -1,4 +1,5 @@
 from typeguard import typechecked
+
 from rptgen.frame import Frames
 from rptgen.prepare.writer import Writer
 

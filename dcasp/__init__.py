@@ -1,10 +1,13 @@
 import argparse
-from rptgen.escopo import Escopo
-from rptgen import log
-from dcasp.prepare.reader import PadReader
+
 from typeguard import typechecked
 
+from dcasp.prepare.reader import PadReader
+from rptgen import log
+from rptgen.escopo import Escopo
+
 logger = log.get_logger(__name__)
+
 
 @typechecked
 def get_args() -> argparse.Namespace:

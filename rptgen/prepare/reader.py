@@ -1,7 +1,9 @@
-import pandas as pd
-from abc import ABC, abstractmethod
 import os
+from abc import ABC, abstractmethod
+
+import pandas as pd
 from typeguard import typechecked
+
 
 @typechecked
 class Reader(ABC):
@@ -13,5 +15,6 @@ class Reader(ABC):
     def read(self, filename: str) -> pd.DataFrame:
         pass
 
-    def get_filepath(self, base_dir, filename) -> str:
+    @staticmethod
+    def get_filepath(base_dir, filename) -> str:
         return os.path.join(base_dir, filename)

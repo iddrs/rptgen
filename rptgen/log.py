@@ -1,6 +1,8 @@
-from typeguard import typechecked
 import logging
+
 from dotenv import dotenv_values
+from typeguard import typechecked
+
 
 @typechecked
 def get_logger(name: str) -> logging:

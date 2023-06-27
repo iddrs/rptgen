@@ -1,7 +1,9 @@
-from abc import ABC, abstractmethod
-from rptgen.frame import Frames
 import os
+from abc import ABC, abstractmethod
+
 from typeguard import typechecked
+
+from rptgen.frame import Frames
 
 
 @typechecked

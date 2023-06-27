@@ -1,8 +1,9 @@
 import pandas as pd
-from rptgen.prepare import Prepare
-from rptgen.frame import Frames
-from rptgen.escopo import Escopo
 from typeguard import typechecked
+
+from rptgen.escopo import Escopo
+from rptgen.frame import Frames
+from rptgen.prepare import Prepare
 
 
 @typechecked
