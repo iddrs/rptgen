@@ -8,9 +8,12 @@ from dcasp.prepare.reader import PadReader
 import cfg
 import argparse
 from dcasp.prepare.bp import Prepare
+from typeguard import typechecked
 
 logger = log.get_logger(__name__)
 
+
+@typechecked
 def extract(args: argparse.Namespace) -> dict:
     logger.info('Carregando os dados brutos...')
     source_dir = os.path.join(cfg.pad.BASE_DIR, f'{str(args.ano)}-{str(args.mes).zfill(2)}', 'parquet')
@@ -23,6 +26,7 @@ def extract(args: argparse.Namespace) -> dict:
     }
 
 
+@typechecked
 def transform(escopo: Escopo, **kwargs: pd.DataFrame) -> Frames:
     logger.info('Transformando os dados...')
     transformer = Prepare(escopo=escopo, **kwargs)
@@ -30,6 +34,8 @@ def transform(escopo: Escopo, **kwargs: pd.DataFrame) -> Frames:
     logger.debug(f'Frames produzidos: {frames.names()}')
     return frames
 
+
+@typechecked
 def load(filepath: str, frames: Frames):
     logger.info('Salvando os dados transformados...')
     logger.debug(f'Salvando em: {filepath}')

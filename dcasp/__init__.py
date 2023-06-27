@@ -2,9 +2,11 @@ import argparse
 from rptgen.escopo import Escopo
 from rptgen import log
 from dcasp.prepare.reader import PadReader
+from typeguard import typechecked
 
 logger = log.get_logger(__name__)
 
+@typechecked
 def get_args() -> argparse.Namespace:
     argparser = argparse.ArgumentParser(prog='RtpGen',
                                         usage='Gerador de relatórios.',

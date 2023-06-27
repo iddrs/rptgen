@@ -1,7 +1,10 @@
 from abc import ABC, abstractmethod
 from rptgen.frame import Frames
 import os
+from typeguard import typechecked
 
+
+@typechecked
 class Writer(ABC):
 
     def __init__(self, filepath: str):

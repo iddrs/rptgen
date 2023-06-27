@@ -1,8 +1,9 @@
-import os
-import pandas as pd
+from typeguard import typechecked
 from rptgen.frame import Frames
 from rptgen.prepare.writer import Writer
 
+
+@typechecked
 class ExcelWriter(Writer):
 
     def __init__(self, filepath: str):

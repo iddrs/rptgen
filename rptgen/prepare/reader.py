@@ -1,8 +1,9 @@
 import pandas as pd
 from abc import ABC, abstractmethod
 import os
+from typeguard import typechecked
 
-
+@typechecked
 class Reader(ABC):
 
     def __init__(self, base_dir: str):

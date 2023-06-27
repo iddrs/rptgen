@@ -1,6 +1,7 @@
 import pandas as pd
+from typeguard import typechecked
 
-
+@typechecked
 class Frames:
 
     frames: dict[pd.DataFrame] = dict()
@@ -29,4 +30,4 @@ class Frames:
         return (key, frame)
 
     def names(self) -> list:
-        return self.frames.keys()
+        return list(self.frames.keys())

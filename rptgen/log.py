@@ -1,7 +1,8 @@
+from typeguard import typechecked
 import logging
-import os
 from dotenv import dotenv_values
 
+@typechecked
 def get_logger(name: str) -> logging:
     env = dotenv_values('.env')
     if env['DEV_MODE'] == 'True':

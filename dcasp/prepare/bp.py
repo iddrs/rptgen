@@ -2,8 +2,10 @@ import pandas as pd
 from rptgen.prepare import Prepare
 from rptgen.frame import Frames
 from rptgen.escopo import Escopo
+from typeguard import typechecked
 
 
+@typechecked
 class Prepare(Prepare):
 
     def __init__(self, escopo: Escopo, **kwargs: pd.DataFrame):

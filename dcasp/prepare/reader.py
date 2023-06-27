@@ -1,9 +1,10 @@
 import os.path
-
 import pandas as pd
 from rptgen.prepare.reader import Reader
+from typeguard import typechecked
 
 
+@typechecked
 class PadReader(Reader):
     def __init__(self, base_dir: str):
         super().__init__(base_dir=base_dir)

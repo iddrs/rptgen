@@ -1,5 +1,4 @@
 """Balanço Patrimonial / DCASP"""
-
 import os
 from rptgen import log
 from dcasp import get_args
