@@ -11,6 +11,13 @@ logger = log.get_logger(__name__)
 
 @typechecked
 def get_args() -> argparse.Namespace:
+    """Função para obter os argumentos de linha de comando.
+
+    Retorno
+    -------
+    argparse.Namespace
+        Namespace contendo os argumentos de linha de comando.
+    """
     argparser = argparse.ArgumentParser(prog='RtpGen',
                                         usage='Gerador de relatórios.',
                                         description='Gerador de relatórios da DCASP.',
