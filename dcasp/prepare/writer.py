@@ -1,3 +1,4 @@
+import pandas as pd
 from typeguard import typechecked
 
 from rptgen.frame import Frames
@@ -35,5 +36,8 @@ class ExcelWriter(Writer):
         frames : Frames
             Instância da classe Frames contendo os DataFrames a serem escritos.
         """
+        writer = pd.ExcelWriter(self.filepath, engine='xlsxwriter')
         for framename, df in frames:
-            df.to_excel(self.filepath, sheet_name=framename, index=None)
+            df.to_excel(writer, sheet_name=framename, index=None)
+        writer._save()
+
