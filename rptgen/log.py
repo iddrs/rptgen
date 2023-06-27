@@ -6,6 +6,20 @@ from typeguard import typechecked
 
 @typechecked
 def get_logger(name: str) -> logging:
+    """Função para obter um logger com configurações baseadas no ambiente.
+
+    Para exibir avisos no nível DEBUG, configure DEV_MODE=True no arquivo .env.
+
+    Parâmetros
+    ----------
+    name : str
+        Nome do logger.
+
+    Retorno
+    -------
+    logging.Logger
+        Instância do logger com o nome e configurações especificadas.
+    """
     env = dotenv_values('.env')
     if env['DEV_MODE'] == 'True':
         level = logging.DEBUG
