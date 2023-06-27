@@ -9,10 +9,10 @@ def get_logger(name: str) -> logging:
     env = dotenv_values('.env')
     if env['DEV_MODE'] == 'True':
         level = logging.DEBUG
-        format = '%(levelname)s    %(pathname)s:%(lineno)d    %(message)s'
+        fmt = '%(levelname)s    %(pathname)s:%(lineno)d    %(message)s'
     else:
         level = logging.INFO
-        format = '%(levelname)s    %(message)s'
+        fmt = '%(levelname)s    %(message)s'
 
-    logging.basicConfig(level=level, format=format)
+    logging.basicConfig(level=level, format=fmt)
     return logging.getLogger(name)

@@ -4,7 +4,7 @@ from typeguard import typechecked
 
 @typechecked
 class Frames:
-    frames: dict[pd.DataFrame] = dict()
+    frames: dict[str, pd.DataFrame] = dict()
     index: int = 0
 
     def add_frame(self, name: str, df: pd.DataFrame):

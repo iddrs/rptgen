@@ -20,8 +20,8 @@ def extract(args: argparse.Namespace) -> dict:
     logger.info('Carregando os dados brutos...')
     source_dir = os.path.join(cfg.Pad.BASE_DIR, f'{str(args.ano)}-{str(args.mes).zfill(2)}', 'parquet')
     logger.debug(f'Dados de origem: {source_dir}')
-    reader = PadReader(base_dir=source_dir)
-    bverenc = reader.read('BVER_ENC.parquet')
+    rdr = PadReader(base_dir=source_dir)
+    bverenc = rdr.read('BVER_ENC.parquet')
     logger.debug(f'bverenc importado: {bverenc.shape}')
     return {
         'bverenc': bverenc
@@ -41,5 +41,5 @@ def transform(escopo: Escopo, **kwargs: pd.DataFrame) -> Frames:
 def load(filepath: str, frames: Frames):
     logger.info('Salvando os dados transformados...')
     logger.debug(f'Salvando em: {filepath}')
-    writer = ExcelWriter(filepath)
-    writer.write(frames)
+    wrtr = ExcelWriter(filepath)
+    wrtr.write(frames)
