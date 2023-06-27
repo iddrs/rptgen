@@ -52,6 +52,7 @@ class Prepare(Prepare):
         frames = Frames()
         frames.add_frame('QuadroPrincipal', self.quadro_principal(bverenc))
         frames.add_frame('QuadroFinanceiroPermanente', self.quadro_financeiro(bverenc))
+        frames.add_frame('QuadroCompensacao', self.quadro_compensacao(bverenc))
         return frames
 
     def preprocess_bverenc(self, df: pd.DataFrame, escopo: Escopo) -> pd.DataFrame:
@@ -160,6 +161,18 @@ class Prepare(Prepare):
             return pd.DataFrame([{'Linha': idlinha, 'ExercicioAtual': vlatual, 'ExercicioAnterior': vlanterior}])
 
     def quadro_financeiro(self, bverenc: pd.DataFrame) -> pd.DataFrame:
+        """Cria um quadro financeiro com base em um DataFrame de entrada.
+
+        Parâmetros
+        ----------
+        bverenc : pd.DataFrame
+            DataFrame contendo informações financeiras.
+
+        Retorno
+        -------
+        pd.DataFrame
+            DataFrame contendo o quadro financeiro.
+        """
         df = pd.DataFrame(columns=['Linha', 'ExercicioAtual', 'ExercicioAnterior'])
         linhas = [{'Ativo': (bverenc['conta_contabil'].str.startswith('1'))},
                   {'AtivoFinanceiro': (bverenc['conta_contabil'].str.startswith('1')) & (
@@ -180,6 +193,18 @@ class Prepare(Prepare):
         return df
 
     def calcula_saldo_patrimonial(self, bverenc: pd.DataFrame) -> pd.DataFrame:
+        """Calcula o saldo patrimonial com base em um DataFrame de entrada.
+
+        Parâmetros
+        ----------
+        bverenc : pd.DataFrame
+            DataFrame contendo informações financeiras.
+
+        Retorno
+        -------
+        pd.DataFrame
+            DataFrame contendo o saldo patrimonial calculado.
+        """
         ativo = bverenc[bverenc['conta_contabil'].str.startswith('1')][['saldo_inicial', 'saldo_final']].sum()
         passivo = bverenc[bverenc['conta_contabil'].str.startswith(('21', '22'))][['saldo_inicial', 'saldo_final']].sum()
         vlatual = ativo['saldo_final'] - passivo['saldo_final']
@@ -189,4 +214,34 @@ class Prepare(Prepare):
             'ExercicioAtual': vlatual,
             'ExercicioAnterior': vlanterior,
         }])
+        return df
+
+    def quadro_compensacao(self, bverenc: pd.DataFrame) -> pd.DataFrame:
+        """Cria um quadro de compensação com base em um DataFrame de entrada.
+
+        Parâmetros
+        ----------
+        bverenc : pd.DataFrame
+            DataFrame contendo informações financeiras.
+
+        Retorno
+        -------
+        pd.DataFrame
+            DataFrame contendo o quadro de compensação.
+        """
+        df = pd.DataFrame(columns=['Linha', 'ExercicioAtual', 'ExercicioAnterior'])
+        linhas = [{'AtosPotenciaisAtivos': (bverenc['conta_contabil'].str.startswith('811'))},
+                  {'GarantiasEContragarantiasRecebidas': (bverenc['conta_contabil'].str.startswith('8111'))},
+                  {'DireitosConveniadosEOutrosInstrumentosCongeneres': (bverenc['conta_contabil'].str.startswith('8112'))},
+                  {'DireitosContratuais': (bverenc['conta_contabil'].str.startswith('8113'))},
+                  {'OutrosAtosPotenciaisAtivos': (bverenc['conta_contabil'].str.startswith('8119'))},
+                  {'AtosPotenciaisPassivos': (bverenc['conta_contabil'].str.startswith('812'))},
+                  {'GarantiasEContragarantiasConcedidas': (bverenc['conta_contabil'].str.startswith('8121'))},
+                  {'ObrigacoesConveniadasEOutrosInstrumentosCongeneres': (
+                      bverenc['conta_contabil'].str.startswith('8122'))},
+                  {'ObrigacoesContratuais': (bverenc['conta_contabil'].str.startswith('8123'))},
+                  {'OutrosAtosPotenciaisPassivos': (bverenc['conta_contabil'].str.startswith('8129'))},
+                  ]
+        for i in linhas:
+            df = pd.concat([df, self.calcula_colunas(i, df, bverenc)])
         return df
