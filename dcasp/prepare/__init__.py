@@ -5,7 +5,7 @@ import pandas as pd
 from typeguard import typechecked
 
 import cfg
-from dcasp.prepare.bp import Prepare
+from dcasp.prepare.bp import BalancoPatrimonialPrepare
 from dcasp.prepare.reader import PadReader
 from dcasp.prepare.writer import ExcelWriter
 from rptgen import log
@@ -57,7 +57,7 @@ def transform(escopo: Escopo, **kwargs: pd.DataFrame) -> Frames:
         Instância da classe Frames contendo os DataFrames com os dados transformados.
     """
     logger.info('Transformando os dados...')
-    transformer = Prepare(escopo=escopo, **kwargs)
+    transformer = BalancoPatrimonialPrepare(escopo=escopo, **kwargs)
     frames = transformer.prepare()
     logger.debug(f'Frames produzidos: {frames.names()}')
     return frames

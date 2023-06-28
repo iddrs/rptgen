@@ -7,12 +7,12 @@ from rptgen.prepare import Prepare
 
 
 @typechecked
-class Prepare(Prepare):
+class BalancoPatrimonialPrepare(Prepare):
     """Classe para preparação de dados.
 
     Herda de
     ---------
-    Prepare
+    BalancoPatrimonialPrepare
 
     Métodos
     -------
