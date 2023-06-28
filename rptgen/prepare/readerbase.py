@@ -6,7 +6,7 @@ from typeguard import typechecked
 
 
 @typechecked
-class Reader(ABC):
+class ReaderBase(ABC):
     """Classe abstrata base para leitores de arquivos.
 
     Atributos

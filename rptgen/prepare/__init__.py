@@ -8,7 +8,7 @@ from rptgen.frame import Frames
 
 
 @typechecked
-class Prepare(ABC):
+class PrepareBase(ABC):
     """Classe abstrata base para preparação de dados.
 
     Atributos

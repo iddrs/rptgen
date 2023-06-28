@@ -5,9 +5,9 @@ import pandas as pd
 from typeguard import typechecked
 
 import cfg
-from dcasp.prepare.bp import BalancoPatrimonialPrepare
-from dcasp.prepare.reader import PadReader
-from dcasp.prepare.writer import ExcelWriter
+from dcasp.prepare.bp import Prepare
+from dcasp.prepare.reader import PadReaderBase
+from dcasp.prepare.writer import ExcelWriterBase
 from rptgen import log
 from rptgen.escopo import Escopo
 from rptgen.frame import Frames
@@ -32,7 +32,7 @@ def extract(args: argparse.Namespace) -> dict:
     logger.info('Carregando os dados brutos...')
     source_dir = os.path.join(cfg.Pad.BASE_DIR, f'{str(args.ano)}-{str(args.mes).zfill(2)}', 'parquet')
     logger.debug(f'Dados de origem: {source_dir}')
-    rdr = PadReader(base_dir=source_dir)
+    rdr = PadReaderBase(base_dir=source_dir)
     bverenc = rdr.read('BVER_ENC.parquet')
     logger.debug(f'bverenc importado: {bverenc.shape}')
     return {
@@ -57,7 +57,7 @@ def transform(escopo: Escopo, **kwargs: pd.DataFrame) -> Frames:
         Instância da classe Frames contendo os DataFrames com os dados transformados.
     """
     logger.info('Transformando os dados...')
-    transformer = BalancoPatrimonialPrepare(escopo=escopo, **kwargs)
+    transformer = Prepare(escopo=escopo, **kwargs)
     frames = transformer.prepare()
     logger.debug(f'Frames produzidos: {frames.names()}')
     return frames
@@ -76,5 +76,5 @@ def load(filepath: str, frames: Frames):
     """
     logger.info('Salvando os dados transformados...')
     logger.debug(f'Salvando em: {filepath}')
-    wrtr = ExcelWriter(filepath)
+    wrtr = ExcelWriterBase(filepath)
     wrtr.write(frames)

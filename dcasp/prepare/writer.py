@@ -2,16 +2,16 @@ import pandas as pd
 from typeguard import typechecked
 
 from rptgen.frame import Frames
-from rptgen.prepare.writer import Writer
+from rptgen.prepare.writer import WriterBase
 
 
 @typechecked
-class ExcelWriter(Writer):
+class ExcelWriterBase(WriterBase):
     """Classe para escrever DataFrames em arquivos Excel.
 
     Herda de
     ---------
-    Writer
+    WriterBase
 
     Métodos
     -------

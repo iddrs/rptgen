@@ -7,7 +7,7 @@ from rptgen.frame import Frames
 
 
 @typechecked
-class Writer(ABC):
+class WriterBase(ABC):
     """Classe abstrata base para escritores de arquivos.
 
     Atributos

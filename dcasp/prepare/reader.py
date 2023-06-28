@@ -3,16 +3,16 @@ import os.path
 import pandas as pd
 from typeguard import typechecked
 
-from rptgen.prepare.reader import Reader
+from rptgen.prepare.reader import ReaderBase
 
 
 @typechecked
-class PadReader(Reader):
+class PadReaderBase(ReaderBase):
     """Classe para ler arquivos PAD.
 
     Herda de
     ---------
-    Reader
+    ReaderBase
 
     Métodos
     -------

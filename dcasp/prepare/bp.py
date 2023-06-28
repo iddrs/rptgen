@@ -3,16 +3,16 @@ from typeguard import typechecked
 
 from rptgen.escopo import Escopo
 from rptgen.frame import Frames
-from rptgen.prepare import Prepare
+from rptgen.prepare import PrepareBase
 
 
 @typechecked
-class BalancoPatrimonialPrepare(Prepare):
+class Prepare(PrepareBase):
     """Classe para preparação de dados.
 
     Herda de
     ---------
-    BalancoPatrimonialPrepare
+    Prepare
 
     Métodos
     -------

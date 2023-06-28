@@ -2,7 +2,7 @@ import argparse
 
 from typeguard import typechecked
 
-from dcasp.prepare.reader import PadReader
+from dcasp.prepare.reader import PadReaderBase
 from rptgen import log
 from rptgen.escopo import Escopo
 
