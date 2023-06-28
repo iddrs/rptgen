@@ -7,7 +7,7 @@ from rptgen.prepare.reader import ReaderBase
 
 
 @typechecked
-class PadReaderBase(ReaderBase):
+class PadReader(ReaderBase):
     """Classe para ler arquivos PAD.
 
     Herda de

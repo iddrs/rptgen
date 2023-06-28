@@ -6,7 +6,7 @@ from typeguard import typechecked
 
 import cfg
 from dcasp.prepare.bp import Prepare
-from dcasp.prepare.reader import PadReaderBase
+from dcasp.prepare.reader import PadReader
 from dcasp.prepare.writer import ExcelWriterBase
 from rptgen import log
 from rptgen.escopo import Escopo
@@ -32,7 +32,7 @@ def extract(args: argparse.Namespace) -> dict:
     logger.info('Carregando os dados brutos...')
     source_dir = os.path.join(cfg.Pad.BASE_DIR, f'{str(args.ano)}-{str(args.mes).zfill(2)}', 'parquet')
     logger.debug(f'Dados de origem: {source_dir}')
-    rdr = PadReaderBase(base_dir=source_dir)
+    rdr = PadReader(base_dir=source_dir)
     bverenc = rdr.read('BVER_ENC.parquet')
     logger.debug(f'bverenc importado: {bverenc.shape}')
     return {

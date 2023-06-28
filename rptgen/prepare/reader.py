@@ -50,7 +50,6 @@ class ReaderBase(ABC):
         NotImplementedError
             Levantada quando o método não é implementado pela subclasse.
         """
-        pass
 
     @staticmethod
     def get_filepath(base_dir, filename) -> str:

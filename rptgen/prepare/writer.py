@@ -47,4 +47,3 @@ class WriterBase(ABC):
         NotImplementedError
             Levantada quando o método não é implementado pela subclasse.
         """
-        pass

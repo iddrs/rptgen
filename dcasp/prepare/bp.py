@@ -181,7 +181,8 @@ class Prepare(PrepareBase):
                           bverenc['indicador_superavit_financeiro'] == 'P')},
                   {'Passivo': (bverenc['conta_contabil'].str.startswith(('21', '22')))},
                   {'PassivoFinanceiro': ((bverenc['conta_contabil'].str.startswith(('21', '22'))) & (
-                          bverenc['indicador_superavit_financeiro'] == 'F') | bverenc['conta_contabil'].str.startswith(('6221301', '6221305', '6311', '6315')))},
+                          bverenc['indicador_superavit_financeiro'] == 'F')
+                          | bverenc['conta_contabil'].str.startswith(('6221301', '6221305', '6311', '6315')))},
                   {'PassivoPermanente': (bverenc['conta_contabil'].str.startswith(('21', '22'))) & (
                           bverenc['indicador_superavit_financeiro'] == 'P')}
                   ]
