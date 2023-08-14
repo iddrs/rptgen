@@ -1,0 +1,30 @@
+{
+    "name": "iddrs/rptgen",
+    "description": "Gerador de relatórios -- RREO, RGF, DCASP etc",
+    "type": "project",
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.29"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Iddrs\\": "src/Iddrs/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Everton da Rosa",
+            "email": "everton3x@gmail.com"
+        }
+    ],
+    "config": {
+        "platform": {
+            "php": "8.2.9",
+            "ext-pdo_sqlite": "8.2.9"
+        },
+        "platform-check": true
+    }
+}
